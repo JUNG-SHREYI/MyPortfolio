@@ -195,8 +195,5 @@ footer .social-links a {
   font-size: 1.5rem;
   display: none;
 }
-window.addEventListener('scroll', function(){
-  const btn = document.getElementById('scrollTopBtn');
-  if (window.scrollY > 300) btn.style.display = 'block'; else btn.style.display = 'none';
-});
+/* Scroll handling moved to external script */
 /* End of CSS */
