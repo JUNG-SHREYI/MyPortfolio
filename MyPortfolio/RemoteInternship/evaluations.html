@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluate Assignments</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0b38ed;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    header {
+      background-color:  #1e3a8a;
+      color: white;
+      padding: 15px 25px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    .container {
+      margin: 40px auto;
+      max-width: 800px;
+      background: #72bac3;
+      text-align: center;
+      container: center;
+      border-radius: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 35px;
+    }
+
+    h2 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 5px;
+    }
+    @keyframes fadeIn 
+    {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+     .card:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #b9def9;
+    }
+
+    tr:hover {
+      background-color: #3693f5;
+    }
+
+    .evaluate-btn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .evaluate-btn:hover {
+      background-color: #2980b9;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: rgb(40, 210, 228);
+      padding: 25px;
+      border-radius: 8px;
+      width: 400px
+    }
+
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      color: #999;
+      font-size: 20px;
+    }
+
+    .rating input {
+      margin: 5px 0;
+      width: 100%;
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      margin-top: 10px;
+      padding: 8px;
+      resize: none;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .submit-btn {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #1e8449;
+    }
+
+    :root
+    {
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa6b2;
+      --accent:#4f46e5;
+      --accent-2:#06b6d4;
+      --glass: rgba(255,255,255,0.03)
+    }
+    *{
+      box-sizing:border-box
+    }
+    body
+    {
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      color:#e6eef6;
+      background:linear-gradient(180deg,#071024 0%, #081827 100%);
+      min-height:100vh;
+      overflow: hidden;
+    }
+    .app
+    {
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:24px;
+      padding:22px
+    }
+    .sidebar
+    {
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      color:#cfe7ff;
+      height:calc(100vh - 44px);
+      position:sticky;
+      top:22px
+    }
+    .brand
+    {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:18px
+    }
+    .logo
+    {
+      width:42px;
+      height:42px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700
+    }
+    nav a
+    {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px;
+      border-radius:8px;
+      color:inherit;
+      text-decoration:none;
+      margin-bottom:6px
+    }
+    nav a:hover
+    {
+      background:var(--glass)
+    }
+    .search
+    {
+      display:flex;
+      margin-bottom:12px
+    }
+    .search input
+    {
+      flex:1;
+      padding:8px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.03);
+      background:transparent;
+      color:inherit
+    }
+
+    .main
+    {
+      padding:18px
+    }
+    .topbar
+    {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px
+    }
+    .cards
+    {
+      display:flex;
+      gap:14px;
+      margin-bottom:18px
+    }
+    .card
+    {
+      flex:1;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:14px;
+      border-radius:10px
+    }
+    .card h3
+    {
+      margin:0 0 8px 0;
+      font-size:14px;
+      color:var(--muted)
+    }
+    .card .value
+    {
+      font-size:22px;
+      font-weight:700
+    }
+
+    .grid
+    {
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:14px
+    }
+    .panel
+    {
+      background:var(--card);
+      padding:14px;
+      border-radius:10px
+    }
+    table
+    {
+      width:100%;
+      border-collapse:collapse;
+      color:#dceffa
+    }
+    th,td
+    {
+      padding:8px;
+      text-align:left;
+      border-bottom:1px dashed rgba(255,255,255,0.02)
+    }
+    th
+    {
+      color:var(--muted);
+      font-size:13px
+    }
+
+    .btn
+    {
+      display:inline-block;
+      padding:8px 10px;
+      border-radius:8px;
+      background:var(--accent);
+      color:white;
+      text-decoration:none;
+      border:none;
+      
+      cursor:pointer;
+    }
+    .btn.secondary
+    {
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06)
+    }
+
+    .submission
+    {
+      display:flex;
+      align-items:center;
+      gap:12px
+    }
+    .avatar
+    {
+      width:44px;
+      height:44px;
+      border-radius:8px;
+      background:linear-gradient(180deg,#1f2937,#0f1724);
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+
+    .rubric
+    {
+      display:grid;
+      gap:8px
+    }
+    .rubric .row
+    {
+      display:flex;
+      justify-content:space-between;
+      align-items:center
+    }
+    input[type=range]
+    {
+      width:100%
+    }
+
+    /* responsive */
+    @media (max-width:880px)
+    {
+      .app
+      {
+        grid-template-columns:1fr;
+        padding:12px
+      }
+      .sidebar
+      {
+        position:relative;
+        height:auto
+      }
+      .grid
+      {
+        grid-template-columns:1fr
+      }
+      .cards
+      {
+        flex-direction:column
+      }
+    }
+
+    /* small helpers */
+    .muted
+    {
+      color:var(--muted)
+    }
+    .pill
+    {
+      padding:6px 8px;
+      background:rgba(255,255,255,0.03);
+      border-radius:999px;
+      font-size:12px
+    }
+    .progress
+    {
+      height:10px;
+      background:rgba(255,255,255,0.03);
+      border-radius:999px;
+      overflow:hidden
+    }
+    .progress > i
+    {
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      width:40%
+    }
+    .empty
+    {
+      color:#6b7280;
+      text-align:center;
+      padding:36px
+    }
+
+  </style>
+
+</head>
+<body>
+  <header>
+    🧾 Evaluation of Submitted Assignments
+  </header>
+<div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">JK</div>
+        <div>
+          <div style="font-weight:700">Jungkook</div>
+          <div class="muted" style="font-size:13px">Front-end Internship</div>
+        </div>
+      </div>
+      <div class="search"><input id="search" placeholder="Search interns, tasks..."/></div>
+      <nav>
+        <a href="dashboard.html">🏠 Dashboard</a>
+        <a href="interns.html" data-route="interns">👥 Interns</a>
+        <a href="assignments.html" data-route="assignments">🗂 Assignments</a>
+        <a href="#" data-route="evaluations">📝 Evaluations</a>
+        <a href="messages.html">✉ Messages</a>
+        <a href="calendar.html">📅 Calendar</a>
+        <a href="settings.html" data-route="settings">⚙️ Settings</a>
+        <a href="billing.html">💳Payments</a>
+      </nav>
+      <div style="position:absolute;bottom:22px;left:18px;right:18px;font-size:13px;color:var(--muted)">Version 1.0 • Demo</div>
+    </aside>
+
+
+  <div class="container">
+    <body style="container: center; text-align: center;"></body>
+    <h2>Submitted Assignments</h2>
+    <table id="submissionTable">
+      <thead>
+        <tr>
+          <th>Intern Name</th>
+          <th>Assignment Title</th>
+          <th>Submission Date</th>
+          <th>File/Link</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Park Jimin</td>
+          <td>Web Page Layout</td>
+          <td>Oct 22, 2025</td>
+          <td><a href="#" target="_blank">View Work</a></td>
+          <td><button class="evaluate-btn" onclick="openModal('Priya Sharma')">Evaluate</button></td>
+        </tr>
+        <tr>
+          <td>Kim Namjoon</td>
+          <td>Portfolio Design</td>
+          <td>Oct 23, 2025</td>
+          <td><a href="#" target="_blank">View Work</a></td>
+          <td><button class="evaluate-btn" onclick="openModal('Arjun Rao')">Evaluate</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+   <!-- Messages -->
+    <section id="page-messages" class="page">
+      <h1>Messages</h1>
+      <div class="card"><div class="empty">No messages.</div></div>
+    </section>
+
+    <!-- Calendar -->
+    <section id="page-calendar" class="page">
+      <h1>Calendar</h1>
+      <div class="card">
+        <ul>
+          <li>Nov 15 – Assignment 2 Due</li>
+          <li>Nov 18 – Evaluation Round</li>
+          <li>Nov 25 – Feedback Session</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="page-settings" class="page">
+      <h1>Settings</h1>
+      <div class="card">
+        <label>Theme:
+          <select><option>Dark</option><option>Light</option></select>
+        </label><br><br>
+        <button class="btn">Save Changes</button>
+      </div>
+    </section>
+
+  <!-- Modal -->
+  <div class="modal" id="evalModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h3>Evaluate Assignment</h3>
+      <p id="internName"></p>
+
+      <form id="evalForm">
+        <label>Code Quality (out of 10)</label>
+        <input type="number" id="codeQuality" min="0" max="10" required>
+
+        <label>Creativity (out of 10)</label>
+        <input type="number" id="creativity" min="0" max="10" required>
+
+        <label>Timeliness (out of 10)</label>
+        <input type="number" id="timeliness" min="0" max="10" required>
+
+        <label>Feedback</label>
+        <textarea id="feedback" placeholder="Write feedback..."></textarea>
+
+        <button type="button" class="submit-btn" onclick="submitEvaluation()">Submit Evaluation</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('evalModal');
+    const internDisplay = document.getElementById('internName');
+
+    let currentIntern = '';
+
+    function openModal(intern) {
+      currentIntern = intern;
+      internDisplay.textContent = "Intern: " + intern;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function submitEvaluation() {
+      const code = document.getElementById('codeQuality').value;
+      const creativity = document.getElementById('creativity').value;
+      const time = document.getElementById('timeliness').value;
+      const feedback = document.getElementById('feedback').value;
+
+      if (code && creativity && time) {
+        const avg = ((+code + +creativity + +time) / 3).toFixed(2);
+        alert(`✅ Evaluation submitted for ${currentIntern}\nAverage Score: ${avg}\nFeedback: ${feedback}`);
+        closeModal();
+      } else {
+        alert("Please fill all rating fields.");
+      }
+    }
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+</body>
+</html>

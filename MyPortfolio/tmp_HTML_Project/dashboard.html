@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <style>
+    :root
+    {--bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa6b2;
+      --accent:#4f46e5;
+      --accent-2:#06b6d4;
+      --glass: rgba(255,255,255,0.03)
+    }
+    *{
+      box-sizing:border-box
+    }
+    body
+    {
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      color:#e6eef6;
+      background:linear-gradient(180deg,#071024 0%, #081827 100%);
+      min-height:100vh
+    }
+    .app
+    {
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:24px;
+      padding:22px
+    }
+    @keyframes fadeIn 
+    {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .sidebar
+    {
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      color:#cfe7ff;
+      height:calc(100vh - 44px);
+      position:sticky;
+      top:22px;
+
+    }
+    .brand
+    {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:18px
+    }
+    .logo
+    {
+      width:42px;
+      height:42px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700}
+    nav a
+    {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px;
+      border-radius:8px;
+      color:inherit;
+      text-decoration:none;
+      margin-bottom:6px
+    }
+    nav a:hover
+    {
+      background:var(--glass)
+    }
+    .search
+    {
+      display:flex;
+      margin-bottom:12px
+    }
+    .search input
+    {
+      flex:1;
+      padding:8px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.03);
+      background:transparent;
+      color:inherit
+    }
+
+    .main
+    {
+      padding:18px
+    }
+    
+    @keyframes slideIn
+   {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .topbar
+    {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px
+    }
+    .cards
+    {
+      display:flex;
+      gap:14px;
+      margin-bottom:18px
+    }
+    .card
+    {
+      flex:1;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:14px;
+      border-radius:10px
+    }
+    .card h3
+    {
+      margin:0 0 8px 0;
+      font-size:14px;
+      color:var(--muted)
+    }
+    .card .value
+    {
+      font-size:22px;
+      font-weight:700
+    }
+
+    .grid
+    {
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:14px
+    }
+     .card:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    .panel
+    {
+      background:var(--card);
+      padding:14px;
+      border-radius:10px
+    }
+    table
+    {
+      width:100%;
+      border-collapse:collapse;
+      color:#dceffa
+    }
+    th,td
+    {
+      padding:8px;
+      text-align:left;
+      border-bottom:1px dashed rgba(255,255,255,0.02)
+    }
+    th
+    {
+      color:var(--muted);
+      font-size:13px
+    }
+
+    .btn
+    {
+      display:inline-block;
+      padding:8px 10px;
+      border-radius:8px;
+      background:var(--accent);
+      color:white;
+      text-decoration:none;
+      border:none;
+      cursor:pointer
+    }
+    .btn.secondary
+    {
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06)
+    }
+
+    .submission
+    {
+      display:flex;
+      align-items:center;
+      gap:12px
+    }
+    .avatar
+    {
+      width:44px;
+      height:44px;
+      border-radius:8px;
+      background:linear-gradient(180deg,#1f2937,#0f1724);
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+
+    .rubric
+    {
+      display:grid;
+      gap:8px
+    }
+    .rubric .row
+    {
+      display:flex;
+      justify-content:space-between;
+      align-items:center
+    }
+    input[type=range]
+    {
+      width:100%
+    }
+
+    /* responsive */
+    @media (max-width:880px)
+    {
+      .app
+      {
+        grid-template-columns:1fr;
+        padding:12px
+      }
+      .sidebar
+      {
+        position:relative;
+        height:auto
+      }
+      .grid
+      {
+        grid-template-columns:1fr
+      }
+      .cards
+      {
+        flex-direction:column
+      }
+    }
+
+    /* small helpers */
+    .muted
+    {
+      color:var(--muted)
+    }
+    .pill
+    {
+      padding:6px 8px;
+      background:rgba(255,255,255,0.03);
+      border-radius:999px;
+      font-size:12px
+    }
+    .progress
+    {
+      height:10px;
+      background:rgba(255,255,255,0.03);
+      border-radius:999px;
+      overflow:hidden
+    }
+    .progress > i
+    {
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      width:40%
+    }
+    .empty
+    {
+      color:#6b7280;
+      text-align:center;
+      padding:36px
+    }
+    /* responsive */
+    @media (max-width: 880px) {
+      .app { grid-template-columns: 1fr; padding: 12px; }
+      .sidebar { position: relative; height: auto; }
+      .grid { grid-template-columns: 1fr; }
+      .cards { flex-direction: column; }
+    }
+
+    #toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      display: none;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s;
+    }
+     header {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+     }
+  </style>
+</head>
+<body>
+  <header>Remote Internship Management - Dashboard</header>
+     <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">JK</div>
+        <div>
+          <div style="font-weight:700">Jungkook</div>
+          <div class="muted" style="font-size:13px">Front-end Internship</div>
+        </div>
+      </div>
+      <div class="search"><input id="search" placeholder="Search interns, tasks..."/></div>
+      <nav>
+        <a href="#" data-route="dashboard">🏠 Dashboard</a>
+        <a href="interns.html" data-route="interns">👥 Interns</a>
+        <a href="assignments.html" data-route="assignments">🗂 Assignments</a>
+        <a href="evaluations.html" data-route="evaluations">📝 Evaluations</a>
+        <a href="messages.html">✉ Messages</a>
+        <a href="calendar.html">📅 Calendar</a>
+        <a href="settings.html" data-route="settings">⚙️ Settings</a>
+        <a href="billing.html">💳Payments</a>
+      </nav>
+      <div style="position:absolute;bottom:22px;left:18px;right:18px;font-size:13px;color:var(--muted)">Version 1.0 • Demo</div>
+    </aside>
+
+
+    <main class="main">
+      <div class="topbar">
+        <h1 style="margin:0;font-size:20px">Dashboard</h1>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="btn" id="new-assignment">+ New Assignment</button>
+          <div class="pill">Coordinator: Wang Yibo.</div>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Active interns</h3>
+          <div class="value" id="active-count">0</div>
+          <div class="muted" style="margin-top:8px">Current cohort working on front-end tasks</div>
+        </div>
+        <div class="card">
+          <h3>Pending submissions</h3>
+          <div class="value" id="pending-count">0</div>
+          <div class="muted" style="margin-top:8px">Submissions to evaluate</div>
+        </div>
+        <div class="card">
+          <h3>Average score</h3>
+          <div class="value" id="avg-score">—</div>
+          <div class="muted" style="margin-top:8px">Across evaluated assignments</div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section class="panel" style="min-height:320px">
+          <h3 style="margin-top:0">Recent Submissions</h3>
+          <div id="submissions-list">
+            <div class="empty">No submissions yet. Create an assignment and ask interns to submit.</div>
+          </div>
+        </section>
+
+        <aside class="panel">
+          <h3 style="margin-top:0">Quick Evaluation</h3>
+          <div class="rubric">
+           <div class="row"><div>Structure & Semantics</div>
+            <div class="muted" id="r1-val">3</div>
+          </div>
+            <input type="range" min="0" max="10" value="3" id="r1"/>
+            <div class="row">
+              <div>Styling & Responsiveness</div>
+              <div class="muted" id="r2-val">4</div>
+            </div>
+            <input type="range" min="0" max="10" value="4" id="r2"/>
+            <div class="row">
+              <div>Accessibility</div>
+              <div class="muted" id="r3-val">2</div>
+            </div>
+            <input type="range" min="0" max="10" value="2" id="r3"/>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn" id="apply-eval">Apply to Selected</button>
+              <button class="btn secondary" id="clear-eval">Reset</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <section style="margin-top:14px" class="panel">
+        <h3 style="margin-top:0">Interns</h3>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="muted">List of interns in the current batch</div>
+          <div>
+            <button class="btn secondary" id="import-sample">Import Sample Data</button>
+            <a href="addInterns.html"><button class="btn" id="add-intern">+ Add Intern</button></a>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Progress</th><th>Avg Score</th><th>Actions</th></tr></thead>
+          <tbody id="interns-tbody"></tbody>
+        </table>
+      </section>
+
+       <!-- Messages -->
+    <section id="page-messages" class="page">
+      <h1>Messages</h1>
+      <div class="card"><div class="empty">No messages.</div></div>
+    </section>
+
+    <!-- Calendar -->
+    <section id="page-calendar" class="page">
+      <h1>Calendar</h1>
+      <div class="card">
+        <ul>
+          <li>Nov 15 – Assignment 2 Due</li>
+          <li>Nov 18 – Evaluation Round</li>
+          <li>Nov 25 – Feedback Session</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="page-settings" class="page">
+      <h1>Settings</h1>
+      <div class="card">
+        <label>Theme:
+          <select><option>Dark</option><option>Light</option></select>
+        </label><br><br>
+        <button class="btn">Save Changes</button>
+      </div>
+    </section>
+
+      <!-- assignment modal (simple) -->
+      <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(1, 8, 21, 0.6);align-items:center;justify-content:center">
+        <div style="background:var(--card);padding:18px;border-radius:12px;width:720px;max-width:94%">
+          <h3 id="modal-title">New Assignment</h3>
+          <div style="display:grid;gap:8px;margin-top:8px">
+            <input id="as-title" placeholder="Title" />
+            <textarea id="as-desc" placeholder="Description (requirements & rubric)" rows="4"></textarea>
+            <div style="display:flex;gap:8px;justify-content:flex-end">
+              <button class="btn secondary" id="modal-cancel">Cancel</button>
+              <button class="btn" id="modal-save">Save Assignment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- simple notification -->
+      <div id="toast" style="position:fixed;right:18px;bottom:18px;display:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 12px;border-radius:8px;color:white"></div>
+
+    </main>
+  </div>
+
+  <script>
+    // Tiny demo data & logic to simulate platform behaviour
+    const state = {interns:[],assignments:[],submissions:[]}
+
+    // helpers
+    const $ = id => document.getElementById(id)
+    function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+
+    function renderStats(){
+      $('active-count').textContent = state.interns.length
+      const pending = state.submissions.filter(s=>s.evaluated===false).length
+      $('pending-count').textContent = pending
+      const scores = state.submissions.filter(s=>s.evaluated).map(s=>s.score)
+      $('avg-score').textContent = scores.length? (Math.round((scores.reduce((a,b)=>a+b,0)/scores.length)*10)/10) : '—'
+    }
+
+    function renderInterns(){
+      const tbody = $('interns-tbody'); tbody.innerHTML=''
+      if(!state.interns.length){
+        tbody.innerHTML = '<tr><td colspan="5" class="empty">No interns added yet.</td></tr>'
+        return
+      }
+      state.interns.forEach((it,idx)=>{
+        const tr = document.createElement('tr')
+        tr.innerHTML = `<td><div style="display:flex;align-items:center;gap:10px"><div class="avatar">${it.name.split(' ').map(n=>n[0]).slice(0,2).join('')}</div><div><div style="font-weight:600">${it.name}</div><div class="muted" style="font-size:13px">${it.role || 'Frontend Intern'}</div></div></div></td><td>${it.email}</td><td><div class="progress"><i style="width:${it.progress||0}%"></i></div></td><td>${it.avgScore===undefined? '—': it.avgScore}</td><td><button class="btn secondary" data-idx="${idx}" onclick="openProfile(${idx})">Open</button> <button class="btn" onclick="assignTo(${idx})">Assign</button></td>`
+        tbody.appendChild(tr)
+      })
+    }
+
+    function renderSubmissions(){
+      const box = $('submissions-list'); box.innerHTML=''
+      if(!state.submissions.length){ box.innerHTML = '<div class="empty">No submissions yet.</div>'; return }
+      state.submissions.slice().reverse().forEach(s=>{
+        const el = document.createElement('div'); el.className='submission'; el.style.padding='10px 0';
+        el.innerHTML = `<div class="avatar">${s.internName.split(' ').map(n=>n[0]).slice(0,2).join('')}</div>
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:600">${s.internName}</div><div class="muted">${new Date(s.submittedAt).toLocaleString()}</div></div>
+            <div class="muted">${s.assignmentTitle} • ${s.message||''}</div>
+            <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+              <button class="btn" onclick="openEval('${s.id}')">Evaluate</button>
+              ${s.evaluated? `<div class="pill">Score: ${s.score}</div>`: `<div class="pill muted">Pending</div>`}
+            </div>
+          </div>`
+        box.appendChild(el)
+      })
+    }
+
+    // actions
+    window.openProfile = function(i){ const intern = state.interns[i]; alert('Open profile (demo) for: '+intern.name) }
+    window.assignTo = function(i){ const intern = state.interns[i]; const a = state.assignments[0]; if(!a){toast('Create an assignment first')} else { const sub={id:Date.now().toString(),internId:i,internName:intern.name,assignmentTitle:a.title,message:'(demo) uploaded code',submittedAt:new Date().toISOString(),evaluated:false,score:null}; state.submissions.push(sub); toast('Assigned and submitted (demo)'); saveAndRender() }}
+
+    window.openEval = function(id){ const s = state.submissions.find(x=>x.id==id); if(!s) return; const r1=+$('r1').value,r2=+$('r2').value,r3=+$('r3').value; const avg = Math.round(((r1+r2+r3)/3)*10)/10; s.evaluated=true; s.score=avg; saveAndRender(); toast('Submission evaluated: '+avg) }
+
+    // modal
+    $('new-assignment').addEventListener('click',()=>{ $('modal').style.display='flex'; $('modal-title').textContent='New Assignment'; $('as-title').value='Build a responsive landing page'; $('as-desc').value='Create a landing page using semantic HTML, responsive CSS and a small interactive component. Mention accessibility considerations.' })
+    $('modal-cancel').addEventListener('click',()=>$('modal').style.display='none')
+    $('modal-save').addEventListener('click',()=>{
+      const t=$('as-title').value.trim(), d=$('as-desc').value.trim(); if(!t) return toast('Enter assignment title')
+      state.assignments.push({id:Date.now().toString(),title:t,desc:d,createdAt:new Date().toISOString()}); $('modal').style.display='none'; toast('Assignment saved'); saveAndRender()
+    })
+
+    // evaluation sliders
+    ['r1','r2','r3'].forEach(id=>{ const el=$(id); const val=$(id+'-val'); el.addEventListener('input',()=>{$(id+'-val').textContent = el.value}) })
+    $('apply-eval').addEventListener('click',()=>{
+      // apply to latest pending submission (demo behaviour)
+      const pending = state.submissions.find(s=>!s.evaluated)
+      if(!pending) return toast('No pending submission selected (demo)')
+      window.openEval(pending.id)
+    })
+    $('clear-eval').addEventListener('click',()=>{['r1','r2','r3'].forEach(id=>{$(id).value=0;$(id+'-val').textContent='0'})})
+
+    // sample data
+    $('import-sample').addEventListener('click',()=>{
+      state.interns = [
+        {name:'Ananya Rao',email:'ananya@example.com',progress:62,avgScore:7.2,role:'Frontend Intern'},
+        {name:'Rohit Kumar',email:'rohit@example.com',progress:48,avgScore:6.1,role:'Frontend Intern'},
+        {name:'Meera Singh',email:'meera@example.com',progress:84,avgScore:8.3,role:'Frontend Intern'}
+      ];
+      state.assignments = [{id:'a1',title:'Responsive Landing Page',desc:'Build a landing page',createdAt:new Date().toISOString()}]
+      state.submissions = [{id:'s1',internId:2,internName:'Meera Singh',assignmentTitle:'Responsive Landing Page',message:'Github: link',submittedAt:new Date().toISOString(),evaluated:true,score:8.3}]
+      saveAndRender(); toast('Sample data imported')
+    })
+
+    // add intern (quick)
+    $('add-intern').addEventListener('click',()=>{
+      const name = prompt('Intern name (demo)'); if(!name) return; const email = prompt('Email'); state.interns.push({name,email,progress:0,avgScore:'—'}); saveAndRender(); toast('Intern added')
+    })
+
+    function saveAndRender(){ renderInterns(); renderSubmissions(); renderStats(); localStorage.setItem('ri-demo', JSON.stringify(state)) }
+    function load(){ const raw = localStorage.getItem('ri-demo'); if(raw){ Object.assign(state, JSON.parse(raw)) } saveAndRender() }
+
+    // quick search filter
+    $('search').addEventListener('input',(e)=>{
+      const q = e.target.value.toLowerCase(); const tbody=$('interns-tbody'); tbody.innerHTML=''
+      const list = state.interns.filter(it=> it.name.toLowerCase().includes(q) || it.email.toLowerCase().includes(q))
+      if(!list.length){ tbody.innerHTML = '<tr><td colspan="5" class="empty">No matches</td></tr>'; return }
+      list.forEach((it,idx)=>{
+        const tr = document.createElement('tr')
+        tr.innerHTML = `<td><div style="display:flex;align-items:center;gap:10px"><div class="avatar">${it.name.split(' ').map(n=>n[0]).slice(0,2).join('')}</div><div><div style="font-weight:600">${it.name}</div><div class="muted" style="font-size:13px">${it.role || 'Frontend Intern'}</div></div></div></td><td>${it.email}</td><td><div class="progress"><i style="width:${it.progress||0}%"></i></div></td><td>${it.avgScore===undefined? '—': it.avgScore}</td><td><button class="btn secondary">Open</button></td>`
+        tbody.appendChild(tr)
+      })
+    })
+
+    // init
+    load()
+
+  </script>
+</body>
+</html>
+
+</body>
+</html>

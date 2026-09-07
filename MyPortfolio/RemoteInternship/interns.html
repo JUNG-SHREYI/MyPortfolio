@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interns List</title>
+  <style>
+    :root{--bg:#0b1220;--card:#071026;--muted:#93a3b5;--accent:#4f46e5;--accent-2:#06b6d4;--glass: rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    @keyframes fadeIn 
+    {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+     .card:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#e6eef6;background:linear-gradient(180deg,#051124 0%, #071726 100%);min-height:100vh}
+    .container{max-width:1100px;margin:28px auto;padding:18px}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    h1{margin:0;font-size:20px}
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{padding:8px 10px;border-radius:8px;background:var(--accent);color:white;border:none;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .card{background:var(--card);padding:12px;border-radius:10px}
+
+    .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    input[type=search]{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;width:260px}
+    select{padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:inherit}
+
+    table{width:100%;border-collapse:collapse;margin-top:6px}
+    th,td{padding:10px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    th{font-size:13px;color:var(--muted)}
+    td .small{font-size:13px;color:var(--muted)}
+
+    .avatar{width:44px;height:44px;border-radius:8px;background:linear-gradient(180deg,#0e1b2a,#071026);display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+    .pill{padding:6px 8px;background:rgba(255,255,255,0.03);border-radius:999px;font-size:12px}
+
+    .actions{display:flex;gap:6px}
+    .muted{color:var(--muted)}
+
+    .pagination{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px}
+
+    /* responsive */
+    @media (max-width:880px){.container{padding:12px}.toolbar{flex-direction:column;align-items:stretch}.controls{flex-wrap:wrap}.actions{flex-direction:column}}
+
+    /* helpers */
+    .empty{padding:28px;text-align:center;color:#6b7280}
+    .export-link{color:inherit;text-decoration:underline;cursor:pointer}
+    .search-highlight{background:linear-gradient(90deg,#ffd54d55,#ffd54d55)}
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa6b2;--accent:#4f46e5;--accent-2:#06b6d4;--glass: rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071024 0%, #081827 100%);min-height:100vh}
+    .app{display:grid;grid-template-columns:260px 1fr;gap:24px;padding:22px}
+    .sidebar{background:var(--card);border-radius:12px;padding:18px;color:#cfe7ff;height:calc(100vh - 44px);position:sticky;top:22px}
+    .brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+    .logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav a{display:flex;gap:10px;align-items:center;padding:10px;border-radius:8px;color:inherit;text-decoration:none;margin-bottom:6px}
+    nav a:hover{background:var(--glass)}
+    .search{display:flex;margin-bottom:12px}
+    .search input{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+
+    .main{padding:18px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .cards{display:flex;gap:14px;margin-bottom:18px}
+    .card{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px}
+    .card h3{margin:0 0 8px 0;font-size:14px;color:var(--muted)}
+    .card .value{font-size:22px;font-weight:700}
+
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+    .panel{background:var(--card);padding:14px;border-radius:10px}
+    table{width:100%;border-collapse:collapse;color:#dceffa}
+    th,td{padding:8px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.02)}
+    th{color:var(--muted);font-size:13px}
+
+    .btn{display:inline-block;padding:8px 10px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;border:none;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    .submission{display:flex;align-items:center;gap:12px}
+    .avatar{width:44px;height:44px;border-radius:8px;background:linear-gradient(180deg,#1f2937,#0f1724);display:flex;align-items:center;justify-content:center}
+
+    .rubric{display:grid;gap:8px}
+    .rubric .row{display:flex;justify-content:space-between;align-items:center}
+    input[type=range]{width:100%}
+
+    /* responsive */
+    @media (max-width:880px){.app{grid-template-columns:1fr;padding:12px}.sidebar{position:relative;height:auto}.grid{grid-template-columns:1fr}.cards{flex-direction:column}}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .pill{padding:6px 8px;background:rgba(255,255,255,0.03);border-radius:999px;font-size:12px}
+    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:40%}
+    .empty{color:#6b7280;text-align:center;padding:36px}
+     header {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+     }
+
+  </style>
+  </style>
+</head>
+<body>
+  <header>Remote Internship Management - Interns list</header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">JK</div>
+        <div>
+          <div style="font-weight:700">Jungkook</div>
+          <div class="muted" style="font-size:13px">Front-end Internship</div>
+        </div>
+      </div>
+      <div class="search"><input id="search" placeholder="Search interns, tasks..."/></div>
+      <nav>
+        <a href="dashboard.html">🏠 Dashboard</a>
+        <a href="#" data-route="interns">👥 Interns</a>
+        <a href="assignments.html" data-route="assignments">🗂 Assignments</a>
+        <a href="evaluations.html" data-route="evaluations">📝 Evaluations</a>
+        <a href="messages.html">✉ Messages</a>
+        <a href="calendar.html">📅 Calendar</a>
+        <a href="settings.html" data-route="settings">⚙️ Settings</a>
+        <a href="billing.html">💳Payments</a>
+      </nav>
+      <div style="position:absolute;bottom:22px;left:18px;right:18px;font-size:13px;color:var(--muted)">Version 1.0 • Demo</div>
+    </aside>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Interns — Current Cohort</h1>
+        <div class="muted" style="margin-top:6px">Manage intern profiles, progress, evaluations and bulk actions.</div>
+      </div>
+      <div class="controls">
+        <a href="addInterns.html"><button class="btn" id="add">+ Add Intern</button></a>
+        <button class="btn secondary" id="import">Import CSV</button>
+        <button class="btn secondary" id="export">Export CSV</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <input type="search" id="q" placeholder="Search by name or email..." />
+        <select id="filter-role"><option value="">All roles</option><option>Frontend Intern</option><option>UI Designer</option><option>Full-stack Intern</option></select>
+        <select id="filter-progress"><option value="">Any progress</option><option value="0-25">0% - 25%</option><option value="26-50">26% - 50%</option><option value="51-75">51% - 75%</option><option value="76-100">76% - 100%</option></select>
+        <button class="btn secondary" id="bulk-eval">Bulk Evaluate</button>
+        <div style="margin-left:auto" class="muted">Showing <span id="show-count">0</span> interns</div>
+      </div>
+
+      <div id="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:36px"><input type="checkbox" id="select-all" /></th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Progress</th>
+              <th>Avg Score</th>
+              <th style="width:170px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <div class="muted">Items per page:</div>
+        <select id="perpage"><option>5</option><option>10</option><option>20</option></select>
+        <button class="btn secondary" id="prev">Prev</button>
+        <div id="page-info" class="muted">Page 1</div>
+        <button class="btn" id="next">Next</button>
+      </div>
+    </div>
+     <!-- Messages -->
+    <section id="page-messages" class="page">
+      <h1>Messages</h1>
+      <div class="card"><div class="empty">No messages.</div></div>
+    </section>
+
+    <!-- Calendar -->
+    <section id="page-calendar" class="page">
+      <h1>Calendar</h1>
+      <div class="card">
+        <ul>
+          <li>Nov 15 – Assignment 2 Due</li>
+          <li>Nov 18 – Evaluation Round</li>
+          <li>Nov 25 – Feedback Session</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="page-settings" class="page">
+      <h1>Settings</h1>
+      <div class="card">
+        <label>Theme:
+          <select><option>Dark</option><option>Light</option></select>
+        </label><br><br>
+        <button class="btn">Save Changes</button>
+      </div>
+    </section>
+
+    <!-- profile modal -->
+    <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(1,6,15,0.6);align-items:center;justify-content:center">
+      <div style="background:var(--card);padding:18px;border-radius:12px;width:720px;max-width:94%">
+        <h3 id="m-title">Intern Profile</h3>
+        <div id="m-body" style="margin-top:10px"></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+          <button class="btn secondary" id="m-cancel">Close</button>
+          <button class="btn" id="m-save" style="display:none">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" style="position:fixed;right:18px;bottom:18px;display:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 12px;border-radius:8px;color:white"></div>
+
+  </div>
+
+  <script>
+    // Lightweight interns list subpage demo logic
+    const state = {
+      interns: [],
+      page: 1,
+      perpage: 5,
+      selected: new Set()
+    }
+
+    const $ = id => document.getElementById(id)
+    function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+
+    // sample seed
+    function seed(){
+      state.interns = [
+        {id:'i1',name:'Ananya Rao',email:'ananya@example.com',role:'Frontend Intern',progress:62,avg:7.2,joined:'2025-06-11'},
+        {id:'i2',name:'Rohit Kumar',email:'rohit@example.com',role:'Frontend Intern',progress:48,avg:6.1,joined:'2025-06-11'},
+        {id:'i3',name:'Meera Singh',email:'meera@example.com',role:'UI Designer',progress:84,avg:8.3,joined:'2025-05-30'},
+        {id:'i4',name:'Vikram Patel',email:'vikram@example.com',role:'Full-stack Intern',progress:22,avg:5.4,joined:'2025-07-02'},
+        {id:'i5',name:'Sana Ali',email:'sana@example.com',role:'Frontend Intern',progress:91,avg:9.0,joined:'2025-04-21'},
+        {id:'i6',name:'Arjun Das',email:'arjun@example.com',role:'UI Designer',progress:13,avg:4.2,joined:'2025-07-10'},
+        {id:'i7',name:'Priya R',email:'priya@example.com',role:'Frontend Intern',progress:55,avg:7.6,joined:'2025-06-01'}
+      ]
+    }
+
+    function render(){
+      const q = $('q').value.trim().toLowerCase();
+      const role = $('filter-role').value; const progress = $('filter-progress').value
+      let list = state.interns.filter(it=>{
+        if(q && !(it.name.toLowerCase().includes(q) || it.email.toLowerCase().includes(q))) return false
+        if(role && it.role !== role) return false
+        if(progress){ const [min,max] = progress.split('-').map(Number); if(!(it.progress >= min && it.progress <= max)) return false }
+        return true
+      })
+
+      // pagination
+      const per = parseInt($('perpage').value)
+      const page = state.page
+      const start = (page-1)*per; const end = start+per
+      const pageItems = list.slice(start,end)
+
+      const tbody = $('tbody'); tbody.innerHTML=''
+      if(!pageItems.length) tbody.innerHTML = '<tr><td colspan="7" class="empty">No interns found.</td></tr>'
+      pageItems.forEach(it=>{
+        const tr = document.createElement('tr')
+        tr.innerHTML = `
+          <td><input type="checkbox" data-id="${it.id}" ${state.selected.has(it.id)?'checked':''} /></td>
+          <td><div style="display:flex;align-items:center;gap:10px"><div class="avatar">${it.name.split(' ').map(n=>n[0]).slice(0,2).join('')}</div><div><div style="font-weight:600">${it.name}</div><div class="small muted">Joined: ${it.joined}</div></div></div></td>
+          <td>${it.email}</td>
+          <td>${it.role}</td>
+          <td><div style="width:140px"><div style="background:rgba(255,255,255,0.03);height:10px;border-radius:999px;overflow:hidden"><i style="display:block;height:100%;width:${it.progress}%;background:linear-gradient(90deg,var(--accent),var(--accent-2))"></i></div><div class="small muted" style="margin-top:6px">${it.progress}%</div></div></td>
+          <td>${it.avg}</td>
+          <td><div class="actions"><button class="btn secondary" data-id="${it.id}" data-action="open">Open</button><button class="btn" data-id="${it.id}" data-action="evaluate">Evaluate</button></div></td>
+        `
+        tbody.appendChild(tr)
+      })
+
+      $('show-count').textContent = list.length
+      $('select-all').checked = pageItems.length && pageItems.every(it=> state.selected.has(it.id))
+      $('page-info').textContent = `Page ${page} • Showing ${Math.min(end,list.length)} of ${list.length}`
+
+      // wire checkbox events
+      tbody.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+        cb.addEventListener('change',e=>{
+          const id=e.target.dataset.id; if(e.target.checked) state.selected.add(id); else state.selected.delete(id)
+          render() // update select-all
+        })
+      })
+
+      // wire action buttons
+      tbody.querySelectorAll('button').forEach(btn=>{
+        btn.addEventListener('click',e=>{
+          const id = btn.dataset.id; const act = btn.dataset.action
+          if(act==='open') openProfile(id)
+          if(act==='evaluate') quickEval(id)
+        })
+      })
+    }
+
+    function openProfile(id){ const intern = state.interns.find(i=>i.id===id); if(!intern) return;
+      $('m-title').textContent = intern.name
+      $('m-body').innerHTML = `<div style="display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start"><div><div class="avatar" style="width:100px;height:100px;font-size:28px">${intern.name.split(' ').map(n=>n[0]).slice(0,2).join('')}</div></div><div><div style="font-weight:700">${intern.name}</div><div class="muted">${intern.role}</div><div style="margin-top:8px"><strong>Email:</strong> ${intern.email}</div><div style="margin-top:8px"><strong>Progress:</strong> ${intern.progress}%</div><div style="margin-top:8px"><strong>Avg Score:</strong> ${intern.avg}</div><div style="margin-top:8px"><strong>Joined:</strong> ${intern.joined}</div></div></div>`
+      $('modal').style.display='flex'
+    }
+
+    function quickEval(id){ const intern = state.interns.find(i=>i.id===id); if(!intern) return; const score = prompt(`Enter score (0-10) for ${intern.name}`, intern.avg||'7'); const v = parseFloat(score); if(isNaN(v)) return; intern.avg = v; toast('Score saved'); save(); render()
+    }
+
+    // bulk evaluate demo: apply same score to selected
+    $('bulk-eval').addEventListener('click',()=>{
+      if(!state.selected.size) return toast('No interns selected')
+      const score = prompt('Enter score (0-10) to apply to selected interns','7'); const v=parseFloat(score); if(isNaN(v)) return
+      state.interns.forEach(i=>{ if(state.selected.has(i.id)) i.avg = v })
+      toast('Bulk evaluation applied'); save(); render()
+    })
+
+    // select all
+    $('select-all').addEventListener('change',e=>{
+      const check = e.target.checked; const per = parseInt($('perpage').value)
+      const q = $('q').value.trim().toLowerCase(); const role=$('filter-role').value; const progress=$('filter-progress').value
+      const list = state.interns.filter(it=>{ if(q && !(it.name.toLowerCase().includes(q) || it.email.toLowerCase().includes(q))) return false; if(role && it.role!==role) return false; if(progress){const [min,max]=progress.split('-').map(Number); if(!(it.progress>=min && it.progress<=max)) return false} return true })
+      const page = state.page; const start=(page-1)*per; const pageItems = list.slice(start,start+per)
+      pageItems.forEach(it=>{ if(check) state.selected.add(it.id); else state.selected.delete(it.id) })
+      render()
+    })
+
+    // search & filters
+    ['q','filter-role','filter-progress','perpage'].forEach(id=>$(id).addEventListener('input',()=>{ state.page=1; render() }))
+
+    // pagination
+    $('prev').addEventListener('click',()=>{ if(state.page>1){state.page--; render()} })
+    $('next').addEventListener('click',()=>{ state.page++; render() })
+
+    // add intern
+    $('add').addEventListener('click',()=>{
+      const name = prompt('Name'); if(!name) return; const email = prompt('Email'); const role = prompt('Role','Frontend Intern'); const id = 'i'+Date.now(); state.interns.push({id,name,email,role,progress:0,avg:'—',joined:new Date().toISOString().slice(0,10)}); save(); render(); toast('Intern added')
+    })
+
+    // import/export CSV (simple)
+    function exportCSV(){ const rows = [['id','name','email','role','progress','avg','joined'], ...state.interns.map(i=>[i.id,i.name,i.email,i.role,i.progress,i.avg,i.joined])]; const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n'); const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='interns.csv'; a.click(); URL.revokeObjectURL(url)
+    }
+    $('export').addEventListener('click',exportCSV)
+
+    // simple import: paste CSV
+    $('import').addEventListener('click',()=>{
+      const txt = prompt('Paste CSV rows (name,email,role,progress) each line'); if(!txt) return; const lines = txt.split('\n').map(l=>l.trim()).filter(Boolean); lines.forEach(l=>{ const parts = l.split(',').map(p=>p.trim()); const [name,email,role,progress] = parts; const id='i'+Date.now()+Math.random().toString(36).slice(2,6); state.interns.push({id,name,email,role:role||'Frontend Intern',progress:parseInt(progress)||0,avg:'—',joined:new Date().toISOString().slice(0,10)}) }); save(); render(); toast('Imported')
+    })
+
+    // persistence
+    function save(){ localStorage.setItem('ri-interns', JSON.stringify(state.interns)) }
+    function load(){ const raw=localStorage.getItem('ri-interns'); if(raw){ state.interns=JSON.parse(raw) } else { seed(); save() } }
+
+    // modal close
+    $('m-cancel').addEventListener('click',()=>{$('modal').style.display='none'})
+
+    // init
+    $('perpage').value = '5'
+    load(); render()
+  </script>
+</body>
+</html>

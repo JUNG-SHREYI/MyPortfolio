@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Remote Internship Manager — Interns List</title>
+  <style>
+    :root
+    {
+        --bg:#f6f7fb;
+        --card:#ffffff;
+        --accent:#2563eb;
+        --muted:#6b7280
+    }
+    body
+    {
+        font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+        margin:0;
+        background:var(--bg);
+        color:#111
+    }
+    .container
+    {
+        max-width:980px;
+        margin:32px auto;
+        padding:20px
+    }
+    .card
+    {
+        background:var(--card);
+        border-radius:12px;
+        box-shadow:0 6px 20px rgba(15,23,42,0.06);
+        padding:20px
+    }
+    h1
+    {
+        margin:0 0 8px;
+        font-size:20px;
+    }
+    p.lead
+    {
+        margin:0 0 18px;
+        color:var(--muted)
+    }
+    .grid
+    {
+        display:grid;
+        grid-template-columns:1fr 380px;
+        gap:18px
+    }
+    label
+    {
+        display:block;
+        font-size:13px;
+        margin-bottom:6px;
+        color:#111
+    }
+    input,textarea,select
+    {
+        width:100%;
+        padding:10px;
+        border:1px solid #e6e9ef;
+        border-radius:8px;
+        font-size:14px
+    }
+    button
+    {
+        cursor:pointer;
+        padding:10px 12px;
+        border-radius:10px;
+        border:0;
+        font-weight:600
+    }
+    .btn-primary
+    {
+        background:var(--accent);
+        color:#fff
+    }
+    .btn-ghost
+    {
+        background:transparent;
+        border:1px solid #e6e9ef
+    }
+    .small
+    {
+        font-size:13px;
+        padding:8px 10px
+    }
+
+    table
+    {
+        width:100%;
+        border-collapse:collapse;
+        margin-top:12px
+    }
+    th,td
+    {
+        padding:10px;
+        border-bottom:1px solid #f1f3f5;
+        text-align:left;
+        font-size:14px
+    }
+    .muted
+    {
+        color:var(--muted);
+        font-size:13px
+    }
+    .toolbar
+    {
+        display:flex;
+        gap:8px;
+        align-items:center
+    }
+    .view-mode
+    {
+        display:flex;
+        gap:8px;
+        margin-bottom:10px
+    }
+    @media (max-width:900px)
+    {
+        .grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Remote Internship Manager</h1>
+      <p class="lead">Interns can add their details here. Teachers can view and export the interns list.</p>
+
+      <div class="view-mode">
+        <button id="internMode" class="btn-ghost small">I'm an Intern</button>
+        <button id="teacherMode" class="btn-ghost small">Teacher / View Interns</button>
+        <div style="margin-left:auto" class="toolbar">
+          <button id="exportCsv" class="btn-primary small">Export CSV</button>
+          <button id="clearAll" class="small">Clear All (Admin)</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section id="formSection" class="card" style="background:transparent;padding:0">
+          <h2 style="font-size:16px;margin-bottom:6px">Save your intern profile</h2>
+          <form id="internForm">
+            <div style="margin-bottom:12px">
+              <label for="name">Full name</label>
+              <input id="name" name="name" required />
+            </div>
+            <div style="margin-bottom:12px">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+            <div style="margin-bottom:12px">
+              <label for="college">College / Organization</label>
+              <input id="college" name="college" />
+            </div>
+            <div style="margin-bottom:12px">
+              <label for="project">Project / Skills (short)</label>
+              <textarea id="project" name="project" rows="3"></textarea>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <button type="submit" class="btn-primary">Save</button>
+              <button type="button" id="saveLocal" class="btn-ghost">Save & Continue</button>
+              <span id="status" class="muted" style="margin-left:8px"></span>
+            </div>
+          </form>
+
+          <div style="margin-top:14px">
+            <h3 style="font-size:14px;margin:0 0 8px">Your saved entry (preview)</h3>
+            <div id="preview" class="muted">No entry saved yet.</div>
+          </div>
+        </section>
+
+        <aside id="listSection" class="card" style="background:transparent;padding:0">
+          <h2 style="font-size:16px;margin-bottom:6px">Interns List</h2>
+          <div id="teacherPrompt" class="muted">Switch to Teacher mode to view the full list.</div>
+          <div id="internsTableWrap" style="display:none">
+            <table id="internsTable">
+              <thead><tr><th>#</th><th>Name</th><th>Email</th><th>College</th><th>Project / Skills</th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <div style="margin-top:8px" class="muted">Total interns: <span id="count">0</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple client-side interns storage using localStorage.
+    const STORAGE_KEY = 'remote_interns_list_v1';
+
+    function loadInterns(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      }catch(e){
+        console.error(e); return [];
+      }
+    }
+
+    function saveInterns(list){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function addIntern(entry){
+      const list = loadInterns();
+      list.push(Object.assign({id: Date.now()}, entry));
+      saveInterns(list);
+      return list;
+    }
+
+    function clearInterns(){
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    // UI helpers
+    const form = document.getElementById('internForm');
+    const preview = document.getElementById('preview');
+    const status = document.getElementById('status');
+    const internsTableWrap = document.getElementById('internsTableWrap');
+    const internsTbody = document.querySelector('#internsTable tbody');
+    const countEl = document.getElementById('count');
+
+    function renderPreview(data){
+      if(!data) { preview.textContent = 'No entry saved yet.'; return; }
+      preview.innerHTML = `<strong>${escapeHtml(data.name || '-')}</strong> — ${escapeHtml(data.email||'-')}<br><span class="muted">${escapeHtml(data.college||'')}</span><br>${escapeHtml(data.project||'')}`;
+    }
+
+    function renderTable(){
+      const list = loadInterns();
+      internsTbody.innerHTML = '';
+      list.forEach((it, i)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${i+1}</td><td>${escapeHtml(it.name)}</td><td>${escapeHtml(it.email)}</td><td>${escapeHtml(it.college)}</td><td>${escapeHtml(it.project)}</td>`;
+        internsTbody.appendChild(tr);
+      });
+      countEl.textContent = list.length;
+    }
+
+    function escapeHtml(str) {
+      if(!str) return '';
+      return String(str).replace(/[&<>\"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'":"&#39;'}[m];});
+    }
+
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const data = {name: form.name.value.trim(), email: form.email.value.trim(), college: form.college.value.trim(), project: form.project.value.trim()};
+      if(!data.name || !data.email){ status.textContent = 'Name and email are required.'; return; }
+      addIntern(data);
+      status.textContent = 'Saved ✔';
+      renderPreview(data);
+      setTimeout(()=>status.textContent='',2000);
+    });
+
+    document.getElementById('saveLocal').addEventListener('click', ()=>{
+      const data = {name: form.name.value.trim(), email: form.email.value.trim(), college: form.college.value.trim(), project: form.project.value.trim()};
+      if(!data.name || !data.email){ status.textContent = 'Fill name and email before saving.'; return; }
+      addIntern(data);
+      status.textContent = 'Saved & continued';
+      renderPreview(data);
+      setTimeout(()=>status.textContent='',1800);
+    });
+
+    // Modes: Intern or Teacher
+    document.getElementById('internMode').addEventListener('click', ()=>{
+      internsTableWrap.style.display = 'none';
+      document.getElementById('teacherPrompt').style.display = 'block';
+    });
+
+    document.getElementById('teacherMode').addEventListener('click', ()=>{
+      // Simple prompt for teacher mode. Replace with real auth in production.
+      const pass = prompt('Enter teacher access code (default: teacher123)');
+      if(pass !== 'teacher123') { alert('Access denied'); return; }
+      document.getElementById('teacherPrompt').style.display = 'none';
+      internsTableWrap.style.display = 'block';
+      renderTable();
+    });
+
+    // Export CSV
+    document.getElementById('exportCsv').addEventListener('click', ()=>{
+      const list = loadInterns();
+      if(!list.length){ alert('No interns to export'); return; }
+      const rows = [['Name','Email','College','Project']].concat(list.map(i=>[i.name,i.email,i.college,i.project]));
+      const csv = rows.map(r=>r.map(c=>`"${String(c||'').replace(/"/g,'""') }"`).join(',')).join('\n');
+      const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'interns_list.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Clear all
+    document.getElementById('clearAll').addEventListener('click', ()=>{
+      const ok = confirm('This will delete all saved interns from this browser. Continue?');
+      if(!ok) return;
+      clearInterns(); renderTable(); alert('Cleared');
+    });
+
+    // initialize preview if last saved form exists (show most recent)
+    (function init(){
+      const list = loadInterns();
+      if(list.length) renderPreview(list[list.length-1]);
+    })();
+  </script>
+</body>
+</html>
