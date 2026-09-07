@@ -4,7 +4,7 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
   const email = e.target.email.value;
   const message = e.target.message.value;
   try {
-    const resp = await fetch('YOUR_SERVER_URL/send-sms', {
+    const resp = await fetch('https://YOUR_BACKEND_URL/send-notifications', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, message })
