@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remote Internship Management - Calendar & Schedule</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 30px auto;
+      max-width: 1100px;
+      gap: 20px;
+    }
+
+    /* Calendar */
+    .calendar-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      min-width: 600px;
+      padding: 20px;
+    }
+
+    .month-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 15px;
+    }
+
+    .day-names {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: bold;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .day {
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: right;
+      position: relative;
+      height: 90px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .day-number {
+      font-weight: bold;
+      color: #1e293b;
+    }
+
+    .today {
+      border: 2px solid #2563eb;
+      background-color: #dbeafe;
+    }
+
+    .event {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      font-size: 12px;
+      background-color: #93c5fd;
+      color: #1e3a8a;
+      border-radius: 4px;
+      padding: 3px;
+      text-align: center;
+    }
+
+    /* Schedule */
+    .schedule-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      flex: 0.5;
+      min-width: 300px;
+      padding: 20px;
+      height: fit-content;
+    }
+
+    .schedule-title {
+      text-align: center;
+      color: #1e3a8a;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .schedule-item {
+      background-color: #eef2ff;
+      border-left: 4px solid #2563eb;
+      margin: 10px 0;
+      padding: 10px 12px;
+      border-radius: 6px;
+    }
+
+    .schedule-item h4 {
+      margin: 0;
+      color: #1e293b;
+    }
+
+    .schedule-item p {
+      margin: 3px 0 0;
+      font-size: 14px;
+      color: #475569;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 10px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+      main {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+     :root
+    {--bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa6b2;
+      --accent:#4f46e5;
+      --accent-2:#06b6d4;
+      --glass: rgba(255,255,255,0.03)
+    }
+    *{
+      box-sizing:border-box
+    }
+    body
+    {
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      color:#e6eef6;
+      background:linear-gradient(180deg,#071024 0%, #081827 100%);
+      min-height:100vh
+    }
+    .app
+    {
+      display:grid;
+      grid-template-columns:260px 1fr;
+      gap:24px;
+      padding:22px
+    }
+    @keyframes fadeIn 
+    {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .sidebar
+    {
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      color:#cfe7ff;
+      height:calc(100vh - 44px);
+      position:sticky;
+      top:22px;
+
+    }
+    .brand
+    {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:18px
+    }
+    .logo
+    {
+      width:42px;
+      height:42px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700}
+    nav a
+    {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px;
+      border-radius:8px;
+      color:inherit;
+      text-decoration:none;
+      margin-bottom:6px
+    }
+    nav a:hover
+    {
+      background:var(--glass)
+    }
+    .search
+    {
+      display:flex;
+      margin-bottom:12px
+    }
+    .search input
+    {
+      flex:1;
+      padding:8px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.03);
+      background:transparent;
+      color:inherit
+    }
+
+    .main
+    {
+      padding:18px
+    }
+    
+    @keyframes slideIn
+   {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .topbar
+    {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px
+    }
+    .cards
+    {
+      display:flex;
+      gap:14px;
+      margin-bottom:18px
+    }
+    .card
+    {
+      flex:1;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:14px;
+      border-radius:10px
+    }
+    .card h3
+    {
+      margin:0 0 8px 0;
+      font-size:14px;
+      color:var(--muted)
+    }
+    .card .value
+    {
+      font-size:22px;
+      font-weight:700
+    }
+
+    .grid
+    {
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      gap:14px
+    }
+     .card:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    .panel
+    {
+      background:var(--card);
+      padding:14px;
+      border-radius:10px
+    }
+    table
+    {
+      width:100%;
+      border-collapse:collapse;
+      color:#dceffa
+    }
+    th,td
+    {
+      padding:8px;
+      text-align:left;
+      border-bottom:1px dashed rgba(255,255,255,0.02)
+    }
+    th
+    {
+      color:var(--muted);
+      font-size:13px
+    }
+
+    .btn
+    {
+      display:inline-block;
+      padding:8px 10px;
+      border-radius:8px;
+      background:var(--accent);
+      color:white;
+      text-decoration:none;
+      border:none;
+      cursor:pointer
+    }
+    .btn.secondary
+    {
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06)
+    }
+
+    .submission
+    {
+      display:flex;
+      align-items:center;
+      gap:12px
+    }
+    .avatar
+    {
+      width:44px;
+      height:44px;
+      border-radius:8px;
+      background:linear-gradient(180deg,#1f2937,#0f1724);
+      display:flex;
+      align-items:center;
+      justify-content:center
+    }
+
+    .rubric
+    {
+      display:grid;
+      gap:8px
+    }
+    .rubric .row
+    {
+      display:flex;
+      justify-content:space-between;
+      align-items:center
+    }
+    input[type=range]
+    {
+      width:100%
+    }
+
+    /* responsive */
+    @media (max-width:880px)
+    {
+      .app
+      {
+        grid-template-columns:1fr;
+        padding:12px
+      }
+      .sidebar
+      {
+        position:relative;
+        height:auto
+      }
+      .grid
+      {
+        grid-template-columns:1fr
+      }
+      .cards
+      {
+        flex-direction:column
+      }
+    }
+
+    /* small helpers */
+    .muted
+    {
+      color:var(--muted)
+    }
+    .pill
+    {
+      padding:6px 8px;
+      background:rgba(255,255,255,0.03);
+      border-radius:999px;
+      font-size:12px
+    }
+    .progress
+    {
+      height:10px;
+      background:rgba(255,255,255,0.03);
+      border-radius:999px;
+      overflow:hidden
+    }
+    .progress > i
+    {
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      width:40%
+    }
+    .empty
+    {
+      color:#6b7280;
+      text-align:center;
+      padding:36px
+    }
+    /* responsive */
+    @media (max-width: 880px) {
+      .app { grid-template-columns: 1fr; padding: 12px; }
+      .sidebar { position: relative; height: auto; }
+      .grid { grid-template-columns: 1fr; }
+      .cards { flex-direction: column; }
+    }
+
+    #toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      display: none;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Remote Internship Management & Evaluation Calendar</header>
+  <div class="app">
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <div class="logo">JK</div>
+          <div>
+            <div style="font-weight:700">Jungkook</div>
+            <div class="muted" style="font-size:13px">Frontend Internship</div>
+          </div>
+        </div>
+        <div class="search"><input id="search" placeholder="Search interns, tasks..." /></div>
+        <nav>
+          <a href="dashboard.html">🏠 Dashboard</a>
+          <a href="interns.html">👥 Interns</a>
+          <a href="assignments.html">🗂 Assignments</a>
+          <a href="evaluations.html">📝 Evaluations</a>
+          <a href="messages.html">✉ Messages</a>
+          <a href="#">📅 Calendar</a>
+          <a href="settings.html">⚙ Settings</a>
+          <a href="billing.html">💳Payments</a>
+        </nav>
+      </div>
+      <div style="font-size:13px;color:var(--muted)">Version 2.0 • Enhanced UI</div>
+    </aside>
+
+  <main>
+    <!-- Calendar -->
+    <div class="calendar-container">
+      <div class="month-title">November 2025</div>
+
+      <div class="day-names">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+
+      <div class="calendar-grid">
+        <div class="day"></div>
+        <div class="day"></div>
+        <div class="day"></div>
+        <div class="day"></div>
+        <div class="day"><span class="day-number">1</span></div>
+        <div class="day"><span class="day-number">2</span></div>
+        <div class="day"><span class="day-number">3</span></div>
+
+        <div class="day"><span class="day-number">4</span></div>
+        <div class="day"><span class="day-number">5</span></div>
+        <div class="day"><span class="day-number">6</span></div>
+        <div class="day"><span class="day-number">7</span><div class="event">Task Upload</div></div>
+        <div class="day"><span class="day-number">8</span></div>
+        <div class="day"><span class="day-number">9</span></div>
+        <div class="day"><span class="day-number">10</span></div>
+
+        <div class="day"><span class="day-number">11</span></div>
+        <div class="day today"><span class="day-number">12</span><div class="event">Mentor Meet</div></div>
+        <div class="day"><span class="day-number">13</span></div>
+        <div class="day"><span class="day-number">14</span><div class="event">Evaluation</div></div>
+        <div class="day"><span class="day-number">15</span></div>
+        <div class="day"><span class="day-number">16</span></div>
+        <div class="day"><span class="day-number">17</span></div>
+
+        <div class="day"><span class="day-number">18</span></div>
+        <div class="day"><span class="day-number">19</span></div>
+        <div class="day"><span class="day-number">20</span><div class="event">Project Review</div></div>
+        <div class="day"><span class="day-number">21</span></div>
+        <div class="day"><span class="day-number">22</span><div class="event">Progress Report</div></div>
+        <div class="day"><span class="day-number">23</span></div>
+        <div class="day"><span class="day-number">24</span></div>
+
+        <div class="day"><span class="day-number">25</span></div>
+        <div class="day"><span class="day-number">26</span><div class="event">Final Evaluation</div></div>
+        <div class="day"><span class="day-number">27</span></div>
+        <div class="day"><span class="day-number">28</span></div>
+        <div class="day"><span class="day-number">29</span></div>
+        <div class="day"><span class="day-number">30</span><div class="event">Certificate Issue</div></div>
+        <div class="day"></div>
+      </div>
+    </div>
+
+    <!-- Schedule -->
+    <div class="schedule-container">
+      <div class="schedule-title">Upcoming Schedule</div>
+
+      <div class="schedule-item">
+        <h4>🗓️ Task Upload</h4>
+        <p>November 7, 2025 — Students must upload weekly tasks.</p>
+      </div>
+
+      <div class="schedule-item">
+        <h4>💬 Mentor Meeting</h4>
+        <p>November 12, 2025 — Discussion on project progress.</p>
+      </div>
+
+      <div class="schedule-item">
+        <h4>📊 Evaluation Round 1</h4>
+        <p>November 14, 2025 — Faculty review and scoring.</p>
+      </div>
+
+      <div class="schedule-item">
+        <h4>🔍 Project Review</h4>
+        <p>November 20, 2025 — Team project status check.</p>
+      </div>
+
+      <div class="schedule-item">
+        <h4>🏁 Final Evaluation</h4>
+        <p>November 26, 2025 — Final presentation & evaluation.</p>
+      </div>
+
+      <div class="schedule-item">
+        <h4>🎓 Certificate Issue</h4>
+        <p>November 30, 2025 — Certificates distributed to interns.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Remote Internship Management System | Designed for Evaluation & Scheduling
+  </footer>
+
+</body>
+</html>

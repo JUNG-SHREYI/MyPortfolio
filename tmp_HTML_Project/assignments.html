@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RemoteIntern — Assignments & Submission</title>
+  <style>
+    :root{
+      --bg:#071026;
+      --card:#081226;
+      --muted:#93a3b5;
+      --accent:#4f46e5;
+      --accent-2:#06b6d4
+    }
+    *{
+      box-sizing:border-box
+    }
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      color:#e6eef6;
+      background:linear-gradient(180deg,#031025 0%, #071726 100%);
+      min-height:100vh
+    }
+@keyframes fadeIn 
+    {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+     .card:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    .container{
+      max-width:1100px;
+      margin:28px auto;
+      padding:18px
+    }
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:18px
+    }
+    h1{
+      margin:0;
+      font-size:20px
+    }
+    .controls{
+      display:flex;
+      gap:8px;
+      align-items:center
+    }
+    .btn{padding:8px 10px;border-radius:8px;background:var(--accent);color:white;border:none;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .card{background:var(--card);padding:12px;border-radius:10px}
+    .muted{color:var(--muted)}
+
+    .assignments{display:grid;gap:12px}
+    .assign{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
+    .assign .meta{display:flex;gap:12px;align-items:center}
+    .assign .tag{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);font-size:13px}
+
+    .grid-2{display:grid;grid-template-columns:1fr 360px;gap:12px}
+    .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    input[type=search], input[type=date], select, textarea, input[type=text]{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    textarea{resize:vertical}
+
+    .submission-list{display:grid;gap:8px;margin-top:8px}
+    .sub-item{padding:10px;border-radius:8px;background:rgba(255,255,255,0.01);display:flex;justify-content:space-between;align-items:center}
+    .small{font-size:13px}
+
+    .file-info{font-size:13px;color:var(--muted)}
+    .note{font-size:13px;color:#9aa6b2}
+
+    table{width:100%;border-collapse:collapse;margin-top:6px}
+    th,td{padding:10px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    th{font-size:13px;color:var(--muted)}
+
+    .empty{padding:28px;text-align:center;color:#6b7280}
+
+    @media (max-width:900px){.grid-2{grid-template-columns:1fr}.controls{flex-wrap:wrap}}
+  </style>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa6b2;--accent:#4f46e5;--accent-2:#06b6d4;--glass: rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:#e6eef6;background:linear-gradient(180deg,#071024 0%, #081827 100%);min-height:100vh}
+    .app{display:grid;grid-template-columns:260px 1fr;gap:24px;padding:22px}
+    .sidebar{background:var(--card);border-radius:12px;padding:18px;color:#cfe7ff;height:calc(100vh - 44px);position:sticky;top:22px}
+    .brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+    .logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav a{display:flex;gap:10px;align-items:center;padding:10px;border-radius:8px;color:inherit;text-decoration:none;margin-bottom:6px}
+    nav a:hover{background:var(--glass)}
+    .search{display:flex;margin-bottom:12px}
+    .search input{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+
+    .main{padding:18px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .cards{display:flex;gap:14px;margin-bottom:18px}
+    .card{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px}
+    .card h3{margin:0 0 8px 0;font-size:14px;color:var(--muted)}
+    .card .value{font-size:22px;font-weight:700}
+
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+    .panel{background:var(--card);padding:14px;border-radius:10px}
+    table{width:100%;border-collapse:collapse;color:#dceffa}
+    th,td{padding:8px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.02)}
+    th{color:var(--muted);font-size:13px}
+
+    .btn{display:inline-block;padding:8px 10px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;border:none;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    .submission{display:flex;align-items:center;gap:12px}
+    .avatar{width:44px;height:44px;border-radius:8px;background:linear-gradient(180deg,#1f2937,#0f1724);display:flex;align-items:center;justify-content:center}
+
+    .rubric{display:grid;gap:8px}
+    .rubric .row{display:flex;justify-content:space-between;align-items:center}
+    input[type=range]{width:100%}
+
+    /* responsive */
+    @media (max-width:880px){.app{grid-template-columns:1fr;padding:12px}.sidebar{position:relative;height:auto}.grid{grid-template-columns:1fr}.cards{flex-direction:column}}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .pill{padding:6px 8px;background:rgba(255,255,255,0.03);border-radius:999px;font-size:12px}
+    .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:40%}
+    .empty{color:#6b7280;text-align:center;padding:36px}
+     header {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+     }
+
+  </style>
+</head>
+<body>
+    <header>Remote Internship Management - Assignments</header>
+
+     <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">JK</div>
+        <div>
+          <div style="font-weight:700">Jungkook</div>
+          <div class="muted" style="font-size:13px">Front-end Internship</div>
+        </div>
+      </div>
+      <div class="search"><input id="search" placeholder="Search interns, tasks..."/></div>
+      <nav>
+        <a href="dashboard.html" data-route="dashboard">🏠 Dashboard</a>
+        <a href="interns.html" data-route="interns">👥 Interns</a>
+        <a href="#" data-route="assignments">🗂 Assignments</a>
+        <a href="evaluations.html" data-route="evaluations">📝 Evaluations</a>
+        <a href="messages.html">✉ Messages</a>
+        <a href="calendar.html">📅 Calendar</a>
+        <a href="settings.html" data-route="settings">⚙ Settings</a>
+        <a href="billing.html">💳Payments</a>
+      </nav>
+      <div style="position:absolute;bottom:22px;left:18px;right:18px;font-size:13px;color:var(--muted)">Version 1.0 • Demo</div>
+    </aside>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Assignments — Submission Demo</h1>
+        <div class="muted" style="margin-top:6px">Create assignments and allow interns to submit files/links. This subpage includes a complete client-side submission flow.</div>
+      </div>
+      <div class="controls">
+        <select id="current-intern" title="Simulate logged-in intern">
+          <!-- populated dynamically -->
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <main>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div class="muted">Assignments</div>
+            <div class="muted">Showing <span id="count">0</span></div>
+          </div>
+
+          <div class="toolbar">
+            <input type="search" id="q" placeholder="Search by title or tag..." />
+            <select id="by-status"><option value="">All</option><option value="open">Open</option><option value="closed">Closed</option></select>
+            <input type="date" id="due" />
+            <button class="btn secondary" id="new-assign">+ New</button>
+          </div>
+
+          <div class="assignments" id="assign-list">
+            <div class="empty">No assignments yet. Click <strong>New</strong> to create one.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="card">
+          <h3 style="margin-top:0">Submission Records</h3>
+          <table>
+            <thead><tr><th>Assignment</th><th>Intern</th><th>Submitted At</th><th>Type</th><th>Score</th></tr></thead>
+            <tbody id="subs-tbody"><tr><td colspan="5" class="empty">No submissions</td></tr></tbody>
+          </table>
+        </div>
+      </main>
+
+      <aside class="card">
+        <h3 style="margin-top:0">Create / Quick Edit</h3>
+        <div style="display:grid;gap:8px">
+          <input id="title" placeholder="Assignment title" />
+          <textarea id="desc" placeholder="Short description" rows="4"></textarea>
+          <input id="tags" placeholder="tags (comma separated)" />
+          <input type="date" id="due-date" />
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="create">Create</button>
+            <button class="btn secondary" id="clear">Clear</button>
+          </div>
+
+          <h4 style="margin-top:10px">Selected assignment</h4>
+          <div id="selected-assign" class="muted">(Select an assignment to show submission form)</div>
+
+          <div id="submission-form" style="display:none;margin-top:10px">
+            <h4 style="margin:6px 0">Submit Assignment</h4>
+            <div class="note">You can upload a single file (HTML/CSS/ZIP) or paste a GitHub/Live URL. Files are saved in browser localStorage (demo).</div>
+            <input type="file" id="file" />
+            <div class="file-info" id="file-name">No file chosen</div>
+            <input type="text" id="repo-url" placeholder="GitHub or live URL (optional)" />
+            <textarea id="msg" placeholder="Add a short message (what you did)" rows="3"></textarea>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn" id="submit">Submit</button>
+              <button class="btn secondary" id="reset-form">Reset</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+     <!-- Messages -->
+    <section id="page-messages" class="page">
+      <h1>Messages</h1>
+      <div class="card"><div class="empty">No messages.</div></div>
+    </section>
+
+    <!-- Calendar -->
+    <section id="page-calendar" class="page">
+      <h1>Calendar</h1>
+      <div class="card">
+        <ul>
+          <li>Nov 15 – Assignment 2 Due</li>
+          <li>Nov 18 – Evaluation Round</li>
+          <li>Nov 25 – Feedback Session</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="page-settings" class="page">
+      <h1>Settings</h1>
+      <div class="card">
+        <label>Theme:
+          <select><option>Dark</option><option>Light</option></select>
+        </label><br><br>
+        <button class="btn">Save Changes</button>
+      </div>
+    </section>
+
+    <!-- modal for viewing submission details -->
+    <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(1,6,15,0.6);align-items:center;justify-content:center">
+      <div style="background:var(--card);padding:18px;border-radius:12px;width:720px;max-width:94%">
+        <h3 id="modal-title">Submission</h3>
+        <div id="modal-body" style="margin-top:8px"></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+          <button class="btn secondary" id="modal-close">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" style="position:fixed;right:18px;bottom:18px;display:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 12px;border-radius:8px;color:white"></div>
+
+  </div>
+
+  <script>
+    // Assignment subpage with submission program (client-side demo)
+    const $ = id => document.getElementById(id)
+    function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+
+    const state = {assignments:[], submissions:[], interns:[], selected:null}
+
+    // storage keys
+    const KEY = 'ri-assignments-v2'
+
+    function seed(){
+      state.interns = [
+        {id:'u1',name:'Ananya Rao',email:'ananya@example.com'},
+        {id:'u2',name:'Rohit Kumar',email:'rohit@example.com'},
+        {id:'u3',name:'Meera Singh',email:'meera@example.com'}
+      ]
+      state.assignments = [
+        {id:'a1',title:'Responsive Landing Page',desc:'Create a responsive landing page with a small interactive component.',tags:['responsive','html','css'],due:'2025-11-15',status:'open',max:100,created:'2025-10-01'},
+        {id:'a2',title:'Accessibility Audit & Fixes',desc:'Find accessibility issues and fix them.',tags:['accessibility','a11y'],due:'2025-12-01',status:'open',max:50,created:'2025-10-10'}
+      ]
+      state.submissions = [
+        // example submission saved as dataURL for file demo
+      ]
+      save()
+    }
+
+    function save(){ localStorage.setItem(KEY, JSON.stringify(state)) }
+    function load(){ const raw = localStorage.getItem(KEY); if(raw){ Object.assign(state, JSON.parse(raw)) } else { seed() } }
+
+    // render interns into select (simulate login)
+    function renderInternSelect(){ const sel = $('current-intern'); sel.innerHTML=''; state.interns.forEach(i=>{ const opt=document.createElement('option'); opt.value=i.id; opt.textContent=i.name; sel.appendChild(opt) }) }
+
+    function renderAssignments(){ const q = $('q').value.trim().toLowerCase(); const status = $('by-status').value; const due = $('due').value
+      let list = state.assignments.filter(a=>{ if(q && !(a.title.toLowerCase().includes(q) || a.tags.join(' ').includes(q))) return false; if(status && a.status!==status) return false; if(due && a.due!==due) return false; return true })
+      const wrap = $('assign-list'); wrap.innerHTML=''
+      if(!list.length){ wrap.innerHTML = '<div class="empty">No assignments match your filters.</div>'; $('count').textContent = 0; return }
+      list.forEach(a=>{
+        const div = document.createElement('div'); div.className='assign'
+        const tagHtml = <div style="display:flex;flex-direction:column"><div style="font-weight:700">${a.title}</div><div class="muted small">${a.desc}</div><div style="margin-top:6px" class="muted small">Tags: ${a.tags.join(', ') || '—'}</div></div>
+        div.innerHTML = ${tagHtml}<div style="display:flex;gap:8px;align-items:center"><div class="tag">Due: ${a.due}</div><div class="tag">${a.status}</div><button class="btn" data-id="${a.id}" data-action="select">Select</button><button class="btn secondary" data-id="${a.id}" data-action="view">View</button></div>
+        wrap.appendChild(div)
+      })
+      $('count').textContent = list.length
+
+      // wire buttons
+      wrap.querySelectorAll('button').forEach(b=>b.addEventListener('click',e=>{ const id=b.dataset.id; if(b.dataset.action==='select') selectAssign(id); if(b.dataset.action==='view') viewAssign(id)}))
+    }
+
+    function renderSubmissionsTable(){ const tbody=$('subs-tbody'); tbody.innerHTML=''
+      if(!state.submissions.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty">No submissions</td></tr>'; return }
+      state.submissions.slice().reverse().forEach(s=>{
+        const a = state.assignments.find(x=>x.id===s.assignId) || {title:'(deleted)'}
+        const tr = document.createElement('tr')
+        tr.innerHTML = <td>${a.title}</td><td>${s.internName}</td><td>${new Date(s.submittedAt).toLocaleString()}</td><td>${s.type}</td><td>${s.score===null? '—': s.score}</td>
+        tr.addEventListener('click',()=>openSubmission(s.id))
+        tbody.appendChild(tr)
+      })
+    }
+
+    function selectAssign(id){ state.selected = id; const a = state.assignments.find(x=>x.id===id); $('selected-assign').textContent = a.title + ' — Due: ' + a.due; $('submission-form').style.display = 'block' }
+    function viewAssign(id){ const a = state.assignments.find(x=>x.id===id); if(!a) return; $('modal-title').textContent = a.title; $('modal-body').innerHTML = <div><strong>Description</strong><div class="muted small" style="margin-top:6px">${a.desc}</div><div style="margin-top:8px"><strong>Tags</strong> ${a.tags.join(', ')}</div><div style="margin-top:8px"><strong>Due</strong> ${a.due}</div></div>; $('modal').style.display='flex' }
+
+    function openSubmission(id){ const s = state.submissions.find(x=>x.id===id); if(!s) return; let html = <div><strong>Intern</strong> ${s.internName}<br/><strong>Submitted</strong> ${new Date(s.submittedAt).toLocaleString()}<br/><strong>Type</strong> ${s.type}<br/><strong>Message</strong><div class="muted small" style="margin-top:6px">${s.message || '—'}</div><div style="margin-top:8px">;
+      if(s.fileName && s.fileData){ html += <div><strong>File</strong>: <a href="${s.fileData}" download="${s.fileName}">${s.fileName}</a></div> }
+      if(s.url){ html += <div style="margin-top:8px"><strong>URL</strong>: <a href="${s.url}" target="_blank">${s.url}</a></div> }
+      html += </div></div>
+      $('modal-title').textContent = Submission — ${s.internName}
+      $('modal-body').innerHTML = html
+      $('modal').style.display='flex'
+    }
+
+    // handle submission form file input
+    $('file').addEventListener('change',async (e)=>{
+      const f = e.target.files[0]
+      if(!f) { $('file-name').textContent='No file chosen'; $('file').dataset.data = ''; return }
+      $('file-name').textContent = f.name + ' (' + Math.round(f.size/1024) + ' KB)'
+      // read as dataURL (demo only) - careful: large files will bloat localStorage
+      const reader = new FileReader()
+      reader.onload = function(ev){ $('file').dataset.data = ev.target.result; $('file').dataset.name = f.name }
+      reader.readAsDataURL(f)
+    })
+
+    // submit action
+    $('submit').addEventListener('click',()=>{
+      if(!state.selected) return toast('Select an assignment first')
+      const internId = $('current-intern').value; const intern = state.interns.find(i=>i.id===internId)
+      if(!intern) return toast('Select an intern')
+      const url = $('repo-url').value.trim(); const msg = $('msg').value.trim()
+      const fileData = $('file').dataset.data || ''
+      const fileName = $('file').dataset.name || ''
+      if(!fileData && !url){ return toast('Please upload a file or provide a URL') }
+      const s = {id:'s'+Date.now()+Math.random().toString(36).slice(2,6), assignId: state.selected, internId: intern.id, internName: intern.name, fileName: fileName, fileData: fileData, url: url || null, message: msg, submittedAt: new Date().toISOString(), evaluated:false, score:null, type: fileData? 'file': 'url'}
+      state.submissions.push(s)
+      toast('Submission recorded')
+      // clear form
+      $('file').value=''; $('file').dataset.data=''; $('file').dataset.name=''; $('file-name').textContent='No file chosen'; $('repo-url').value=''; $('msg').value=''
+      save(); renderSubmissionsTable(); renderAssignments()
+    })
+
+    $('reset-form').addEventListener('click',()=>{ $('file').value=''; $('file').dataset.data=''; $('file').dataset.name=''; $('file-name').textContent='No file chosen'; $('repo-url').value=''; $('msg').value=''; toast('Form cleared') })
+
+    // create assignment
+    $('create').addEventListener('click',()=>{
+      const t = $('title').value.trim(); if(!t) return toast('Enter title'); const id='a'+Date.now(); const tags = ($('tags').value||'').split(',').map(s=>s.trim()).filter(Boolean)
+      state.assignments.push({id,title:t,desc:$('desc').value.trim(),tags:tags||[],due:$('due-date').value||'—',status:'open',max:100,created:new Date().toISOString().slice(0,10)})
+      $('title').value=''; $('desc').value=''; $('tags').value=''; $('due-date').value=''
+      toast('Assignment created'); save(); renderAssignments(); renderSubmissionsTable()
+    })
+
+    $('clear').addEventListener('click',()=>{ $('title').value=''; $('desc').value=''; $('tags').value=''; $('due-date').value=''; toast('Cleared') })
+
+    // modal close
+    $('modal-close').addEventListener('click',()=>{$('modal').style.display='none'})
+
+    // filters
+    ['q','by-status','due'].forEach(id=>$(id).addEventListener('input',()=>renderAssignments()))
+
+    // modal view assignment on double click table row? Already clicking open in table
+
+    // initialisation
+    load(); renderInternSelect(); renderAssignments(); renderSubmissionsTable()
+
+    // expose save to window for debug
+    window._ri_state = state
+  </script>
+</body>
+</html>

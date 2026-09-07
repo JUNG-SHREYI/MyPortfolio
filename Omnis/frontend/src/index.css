@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --font-heading: "Chivo", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-mono);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: hsl(240 11% 4%);
+}
+
+code {
+    font-family: var(--font-mono);
+}
+
+@layer base {
+    :root {
+        --background: 240 11% 4%;
+        --foreground: 0 0% 98%;
+        --card: 240 5% 7%;
+        --card-foreground: 0 0% 98%;
+        --popover: 240 6% 8%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 53 93% 50%;
+        --primary-foreground: 240 11% 4%;
+        --secondary: 184 100% 50%;
+        --secondary-foreground: 240 11% 4%;
+        --muted: 240 5% 12%;
+        --muted-foreground: 240 4% 60%;
+        --accent: 240 5% 14%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 100% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 240 4% 16%;
+        --input: 240 4% 16%;
+        --ring: 184 100% 50%;
+        --radius: 0.25rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    h1, h2, h3, h4, .font-heading {
+        font-family: var(--font-heading);
+    }
+}
+
+/* scanline / grid texture */
+.omnis-grid-bg {
+    background-image:
+        linear-gradient(hsla(184, 100%, 50%, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, hsla(184, 100%, 50%, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.omnis-scanlines::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.15) 3px
+    );
+    z-index: 1;
+}
+
+.corner-ticks {
+    position: relative;
+}
+.corner-ticks::before,
+.corner-ticks::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-color: hsl(184 100% 50% / 0.6);
+}
+.corner-ticks::before {
+    top: -1px; left: -1px;
+    border-top: 1px solid; border-left: 1px solid;
+}
+.corner-ticks::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 1px solid; border-right: 1px solid;
+}
+
+.leaflet-container {
+    background: hsl(240 11% 6%);
+    font-family: var(--font-mono);
+}
+.leaflet-tile {
+    filter: grayscale(1) invert(1) brightness(0.85) contrast(1.05) hue-rotate(180deg);
+}
+.leaflet-control-attribution {
+    background: rgba(0,0,0,0.6) !important;
+    color: hsl(240 4% 50%) !important;
+    font-size: 9px !important;
+}
+.leaflet-control-zoom a {
+    background: hsl(240 5% 10%) !important;
+    color: hsl(184 100% 50%) !important;
+    border-color: hsl(240 4% 16%) !important;
+}
+
+::selection {
+    background: hsl(53 93% 50%);
+    color: hsl(240 11% 4%);
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: hsl(240 11% 4%); }
+::-webkit-scrollbar-thumb { background: hsl(240 4% 18%); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: hsl(184 100% 50% / 0.5); }
+
+@keyframes omnis-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+.live-dot { animation: omnis-pulse 1.6s ease-in-out infinite; }
+
+@keyframes omnis-sweep {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(400%); }
+}
+.scan-bar {
+    animation: omnis-sweep 1.2s linear infinite;
+}

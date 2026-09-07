@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme</title>
+    <style>
+:root {
+  --bg: #0d1525;
+  --card: #111a2f;
+  --muted: #9aa6b2;
+  --accent: #6366f1;
+  --accent-2: #06b6d4;
+  --glass: rgba(255, 255, 255, 0.06);
+  --text: #e6eef6;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+/* Light theme */
+:root[data-theme="light"] {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --muted: #5f6368;
+  --accent: #3b82f6;
+  --accent-2: #06b6d4;
+  --glass: rgba(0, 0, 0, 0.05);
+  --text: #1a1a1a;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top left, var(--bg), #060d1a 90%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.4s, color 0.4s;
+}
+</style>
+</head>
+<body>
+    
+         <!-- Settings -->
+    <section id="page-settings" class="page">
+      <h1>Settings</h1>
+      <div class="card">
+        <label>Theme:</label>
+          <select><option>Dark</option><option>Light</option></select>
+        </label><br><br>
+        <button style="color: #057ddf;" class="btn">Save Changes</button>
+      </div>
+    </section>
+    
+
+</body>
+</html>

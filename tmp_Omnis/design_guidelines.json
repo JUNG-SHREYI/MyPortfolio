@@ -1,0 +1,144 @@
+{
+  "theme_mode": "dark",
+  "typography": {
+    "fonts": {
+      "heading": "Chivo",
+      "body": "IBM Plex Mono",
+      "forbidden": ["Inter", "Roboto", "Open Sans", "Lato", "Space Grotesk"]
+    },
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl font-black tracking-tighter",
+      "h2": "text-2xl sm:text-3xl font-bold tracking-tight",
+      "h3": "text-xl font-semibold tracking-tight",
+      "body": "text-sm sm:text-base leading-relaxed",
+      "labels": "text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground"
+    },
+    "rules": [
+      "Use IBM Plex Mono for all data points, numbers, timestamps, and coordinates.",
+      "Headlines MUST use tight letter spacing.",
+      "Overlines/Labels MUST be Uppercase + Tiny + Wide Spacing."
+    ]
+  },
+  "colors": {
+    "archetype": "Retro-Futurism / Swiss High-Contrast",
+    "palette": {
+      "background": "hsl(240, 11%, 4%)",
+      "foreground": "hsl(0, 0%, 98%)",
+      "card": "hsl(240, 5%, 7%)",
+      "card_foreground": "hsl(0, 0%, 98%)",
+      "primary": "hsl(53, 93%, 50%)",
+      "primary_foreground": "hsl(240, 11%, 4%)",
+      "secondary": "hsl(184, 100%, 50%)",
+      "secondary_foreground": "hsl(240, 11%, 4%)",
+      "destructive": "hsl(0, 100%, 60%)",
+      "destructive_foreground": "hsl(0, 0%, 100%)",
+      "border": "hsl(240, 4%, 16%)",
+      "input": "hsl(240, 4%, 16%)",
+      "ring": "hsl(184, 100%, 50%)",
+      "muted": "hsl(240, 5%, 16%)",
+      "muted_foreground": "hsl(240, 4%, 65%)"
+    },
+    "rules": [
+      "No pure black or pure white. Tint greys with cool blue/indigo.",
+      "Primary color (Yellow/hsl(53, 93%, 50%)) is for critical actions, alerts, or confidence highlights.",
+      "Secondary color (Cyan/hsl(184, 100%, 50%)) is for data visualizations and active states.",
+      "NO generic full-screen gradients. Use solid colors with subtle 1px borders.",
+      "Banned colors: #7351B7 (Purple), #1B93A4 (Teal Green). Use Cyan/Yellow instead."
+    ]
+  },
+  "grids_and_layouts": {
+    "strategy": "High Density Grid (For Dashboards / Analytics)",
+    "rules": [
+      "Base Grid: grid-cols-1 md:grid-cols-3 lg:grid-cols-4 or 12-column layout for complex panels.",
+      "Gap Strategy: Tight (gap-4 or gap-6) inside data panels, wider between main sections.",
+      "Use sharp edges or subtle roundness (max 4px border-radius, rounded-sm).",
+      "Implement the 'Technical Look': Expose the skeleton. Use border-collapse style layouts where items have border-r border-b border-border/40.",
+      "Every pixel utilized, stretch heights using h-full on children.",
+      "Avoid empty negative space in data tables; fill with structured empty states."
+    ]
+  },
+  "component_rules": {
+    "surfaces": "Flat Solid surfaces. DO NOT use Glassmorphism for health/scientific data apps as it causes visual refraction. Flat dark backgrounds with 1px hard borders.",
+    "shadcn": [
+      "Use Shadcn components for complex logic: Select, Dialog, Form, Tabs.",
+      "DO NOT overuse generic Cards. Build cardless, rectangular, dense data panels.",
+      "Override Tablist h-9 to h-auto.",
+      "Use Recharts or Shadcn Charts for data viz. Style them with Cyan and Warning Yellow.",
+      "DO NOT use transparent backgrounds on dropdowns or overlays."
+    ],
+    "map_picker": "Integrate an interactive map (react-map-gl/Mapbox, leaflet, or similar) heavily styled in dark mode with neon accents for data points."
+  },
+  "visual_enhancers": {
+    "textures": "Subtle grid lines or crosshairs at corners of major data panels. Scanlines for a terminal feel.",
+    "data_presentation": "Prediction cards MUST show confidence scores with explicit visual indicators (e.g., Progress bars or radial charts). Ensure Timestamp and Source citations are prominent."
+  },
+  "motion": {
+    "rules": [
+      "Minimalist animations. Micro-interactions for feedback.",
+      "Hover states MUST explicitly change background and text color.",
+      "Do NOT use transition: all. Use specific transitions (e.g., transition: background-color 0.2s ease, border-color 0.2s ease)."
+    ]
+  },
+  "accessibility": {
+    "rules": [
+      "data-testid MUST be added to all interactive elements (kebab-case, role-based).",
+      "Maintain minimum 4.5:1 contrast ratio for text.",
+      "Focus states MUST have higher contrast than default state."
+    ]
+  },
+  "media": {
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/30596239/pexels-photo-30596239.jpeg",
+        "category": "Hero / Map Placeholder",
+        "description": "Earth at night view. Use this if the interactive map is loading or as a hero background for the login/signup page."
+      },
+      {
+        "url": "https://images.pexels.com/photos/3837487/pexels-photo-3837487.jpeg",
+        "category": "Texture / Background",
+        "description": "Abstract topography map. Can be heavily darkened and used as a subtle background pattern for 'Saved Locations' or 'Evidence' sidebars."
+      }
+    ],
+    "icons": {
+      "library": "@phosphor-icons/react",
+      "installation": "yarn add @phosphor-icons/react",
+      "style": "Use 'regular' or 'bold' weight for clarity in dense data environments."
+    }
+  },
+  "3d_libraries": {
+    "recommendation": "React Map GL or Leaflet",
+    "purpose": "For immersive, dark-mode city maps. Avoid default Google Maps styling. Essential for the Location search + map picker requirement."
+  },
+  "instructions_to_main_agent": [
+    "Install the required fonts: Chivo and IBM Plex Mono via Google Fonts in index.html.",
+    "Update tailwind.config.js and index.css with the provided precise HSL colors and ensure Dark Mode is default.",
+    "Implement the 'Earth Intelligence report card' as a dense, grid-based dashboard with terminal-like data panels.",
+    "Ensure 'Prediction cards' highlight Confidence scores and data timestamps prominently using the Mono font.",
+    "No centered layouts for data. Left-align text for readability.",
+    "Follow the 'Technical Look' surface strategy: exposed grids, 1px borders, solid flat dark backgrounds."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters ONLY where appropriate (avoid for scientific data panels).",
+    "You MUST NOT apply universal transition. Eg: transition: all. Always add transitions for specific interactive elements excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Use 'sonner' for toasts. Located in /app/frontend/src/components/ui/sonner.js or .jsx."
+  ],
+  "GENERAL_UI_UX_DESIGN_GUIDELINES": [
+    "Optical alignment over geometrical alignment.",
+    "Mobile-first responsive (always).",
+    "Direct Children Only: Grid items MUST be direct children of grid containers.",
+    "All interactive and key informational elements MUST include a data-testid attribute.",
+    "DO NOT use complete transparent background in header, overlays, any surface that has content under it. Example: Dropdown with transparent background."
+  ]
+}

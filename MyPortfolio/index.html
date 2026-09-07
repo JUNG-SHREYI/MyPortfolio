@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMH Shreyamsi - Portfolio</title>
+    <meta name="description"
+        content="BMH Shreyamsi – Aspiring Full‑Stack Developer &amp; Computer Science Engineering Student. Showcase of projects, skills, education, and contact information." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <!-- Dark/Light mode toggle -->
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch" />
+        <label for="theme-switch" aria-label="Toggle dark mode"></label>
+    </div>
+
+    <header class="glass">
+        <nav class="nav-container">
+            <a href="#" class="logo">BMH Shreyamsi</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="section hero glass">
+        <h1>BMH Shreyamsi</h1>
+        <p class="tagline">Aspiring Full‑Stack Developer | CSE Student</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/JUNG-SHREYI" class="btn primary" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/bitragunta-madhava-havishma-shreyamsi-70628b377" class="btn secondary"
+                target="_blank" rel="noopener">LinkedIn</a>
+            <a href="resume.pdf" class="btn secondary" download>Download Resume</a>
+        </div>
+    </section>
+
+    <section id="about" class="section glass">
+        <h2>About Me</h2>
+        <p>I am a Computer Science Engineering student at KL University, currently pursuing a B.Tech with a CGPA of 9.2.
+            I am passionate about software development, web technologies, and emerging technologies, with hands‑on
+            experience through academic projects involving Java, ReactJS, JavaScript, and SQL.</p>
+    </section>
+
+    <section id="skills" class="section glass">
+        <h2>Skills</h2>
+        <ul class="skill-list">
+            <li>Programming: C, Java</li>
+            <li>Web Development: HTML, CSS, JavaScript, ReactJS</li>
+            <li>Database: SQL, DBMS</li>
+            <li>Concepts: Data Structures, OOPS</li>
+            <li>Tools: Git, VS Code, MS Office</li>
+        </ul>
+    </section>
+
+    <section id="projects" class="section glass">
+        <h2>Projects</h2>
+        <div class="project-grid">
+            <div class="project-card glass">
+                <h3>Remote Internship Management</h3>
+                <p>A multi-page internship coordination dashboard for managing intern profiles, assignments,
+                    submissions, evaluations, messages, billing, and calendar deadlines.</p>
+                <p class="tech-stack">Technologies: HTML, CSS, JavaScript, LocalStorage</p>
+                <div class="project-actions">
+                    <!-- Local view code link -->
+                    <a href="https://github.com/JUNG-SHREYI/HTML_Project" class="btn primary" target="_blank" rel="noopener">View
+                        Code</a>
+                    <a href="RemoteInternship/dashboard.html" class="btn secondary" target="_blank" rel="noopener">Open
+                        Dashboard</a>
+                </div>
+            </div>
+            <div class="project-card glass">
+                <h3>Omnis Earth Intelligence</h3>
+                <p>A full-stack environmental intelligence webapp that lets users search locations, explore a map,
+                    analyze live weather and air-quality data, and review evidence-backed predictions.</p>
+                <p class="tech-stack">Technologies: React, Tailwind CSS, Leaflet, FastAPI, MongoDB</p>
+                <div class="project-actions">
+                    <!-- Local view code link -->
+                    <a href="https://github.com/JUNG-SHREYI/Omnis" class="btn primary" target="_blank" rel="noopener">View
+                        Code</a>
+                    <a href="Omnis/frontend/public/index.html" class="btn secondary" target="_blank"
+                        rel="noopener">Explore App</a>
+                </div>
+            </div>
+            <div class="project-card glass">
+                <h3>OTT Streaming Application</h3>
+                <p>An OTT streaming platform that allows users to browse and search movies, web series, and other
+                    entertainment content. Includes content details, user profiles, authentication, content management,
+                    and personalized viewing experiences.</p>
+                <p class="tech-stack">Technologies: Java, ReactJS, SQL</p>
+                <p><b>Under Development</b></p>
+                <div class="project-actions">
+                    <button class="btn disabled" disabled>View Code</button>
+                    <button class="btn disabled" disabled>Live Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section glass">
+        <h2>Education</h2>
+        <ul class="timeline">
+            <li>
+                <span class="timeframe">2025‑2029</span>
+                <span class="institution">B.Tech, Computer Science Engineering – KL University, Vijayawada</span>
+                <span class="grade">CGPA: 9.2</span>
+            </li>
+            <li>
+                <span class="timeframe">2023‑2025</span>
+                <span class="institution">Intermediate (12th Standard), Krishna Chaitanya Jr College</span>
+                <span class="grade">Board of Intermediate Education, Percentage: 79%</span>
+            </li>
+            <li>
+                <span class="timeframe">2022‑2023</span>
+                <span class="institution">SSC (10th Standard), Narayana Concept School</span>
+                <span class="grade">SSC Board, Percentage: 91%</span>
+            </li>
+        </ul>
+    </section>
+
+    <section id="experience" class="section glass">
+        <h2>Experience</h2>
+        <p>Details to be added later.</p>
+    </section>
+
+    <section id="contact" class="section glass">
+        <h2>Contact</h2>
+        <form id="contact-form" class="contact-form" onsubmit="return false;">
+            <input type="text" name="name" placeholder="Your Name" required /><br><br>
+            <input type="email" name="email" placeholder="Your Email" required /><br><br>
+            <textarea name="message" rows="4" placeholder="Your Message" required></textarea><br><br>
+            <button type="submit" class="btn primary">Send Message</button>
+        </form>
+    </section>
+
+    <footer class="glass">
+        <p>&copy; 2026 BMH Shreyamsi. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://github.com/JUNG-SHREYI" target="_blank" rel="noopener" class="social-icon">GitHub</a>
+            <a href="https://www.linkedin.com/in/bitragunta-madhava-havishma-shreyamsi-70628b377" target="_blank"
+                rel="noopener" class="social-icon">LinkedIn</a>
+        </div>
+        <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
